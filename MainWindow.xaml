@@ -85,7 +85,7 @@
                            Width="300"/>
                 <TextBox x:Name="RomanNumeral_TextBox"
                          Width="200"
-                         Text="{Binding Path=RomanNumeral, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding Path=RomanNumeral, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </GroupBox>
 

@@ -27,12 +27,13 @@ namespace PaulsRomanNumerals
         public event PropertyChangedEventHandler PropertyChanged;
         public Dictionary<int, string> RomanDict = new Dictionary<int, string>
         {
-            {1, "I" },
-            { 5, "V" },
-            {10, "X" },
-            {50, "L" },
-            {100, "C" },
-            {500, "D" }
+            { 1,     "I" },
+            { 5,     "V" },
+            { 10,    "X" },
+            { 50,    "L" },
+            { 100,   "C" },
+            { 500,   "D" },
+            { 1000,  "M" }
         };
         #endregion
 
@@ -60,6 +61,7 @@ namespace PaulsRomanNumerals
             private set
             {
                 _romanNumeral = value;
+                OnPropertyChanged(nameof(RomanNumeral));
             }
         }
 
@@ -93,55 +95,71 @@ namespace PaulsRomanNumerals
         #region "This is where my functions are"
         private void ConvertNumbers()
         {
-            NormalNumber.ToString()
             int currentNumber = 0;
-            string convertedNumeral = "";
+            int numOfZeros = 0;
+
+            int lowerInt = 0;
+            int midInt = 0;
+            int upperInt = 0;
+
+            string lowerNumeral = "";
+            string midNumeral = "";          
+            string upperNumeral = "";
+
             try
             {
-                if (int.TryParse(NormalNumber, out currentNumber))
+                // Clear out the Roman Numeral so the string can be built
+                RomanNumeral = "";
+
+                for (int index = 0; index < NormalNumber.Length; index++)
                 {
-                    RecursiveDerivitation(currentNumber);
+                    numOfZeros = NormalNumber.Length - (1 + index);
+                    int number = int.Parse(NormalNumber[index].ToString());
+
+                    int.TryParse($"1{new string('0', numOfZeros)}", out lowerInt);
+                    int.TryParse($"5{new string('0', numOfZeros)}", out midInt);
+                    int.TryParse($"1{new string('0', numOfZeros + 1)}", out upperInt);
+
+                   
+                     lowerNumeral = RomanDict.ContainsKey(lowerInt) ? RomanDict[lowerInt] : "";
+                     midNumeral = RomanDict.ContainsKey(midInt) ? RomanDict[midInt] : "";
+                     upperNumeral = RomanDict.ContainsKey(upperInt) ? RomanDict[upperInt] : "";
+
+                    // Exact match of lower numeral
+                    if(number == 0)
+                    {
+                        continue;
+                    }
+                    else if (number == 1)
+                    {
+                        RomanNumeral += lowerNumeral;
+                    }
+                    else if (number +3 > 5)
+                    {
+                        RomanNumeral += new string(lowerNumeral[0], 5 - number);
+                    }
+                    // Exact match of mid numeral
+                    else if(number == 5)
+                    {
+                        RomanNumeral += midNumeral;            
+                    }
+                    // Move up from the lower numeral
+                    else if (number+3 <= 8)
+                    {
+                        RomanNumeral += $"{midNumeral}{new string(lowerNumeral[0], 5 - number)}";
+                    }
+                    // Move down from the upper numeral
+                    else if (number + 3 > 8)
+                    {
+                        RomanNumeral += $"{new string(upperNumeral[0], 10 - number)}{midNumeral}";
+                    }
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Some exception happened that I don't care about.", "Somthing failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Some exception happened that I don't care about.{ex.ToString()}", "Somthing failed!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private int RecursiveDerivitation(int currentNumber)
-        {
-            int output;
-
-            int minNum = 0;
-            int maxNum = 0;
-
-            foreach(int normyNum in RomanDict.Keys.OrderByDescending((key) => key))
-            {
-                minNum = normyNum <= currentNumber ? normyNum : minNum;
-                if(normyNum >= currentNumber)
-                {
-                    maxNum = normyNum;
-                    continue;
-                }
-            }
-
-            // We add "I"s to Min
-            if((minNum + 3) >= currentNumber)
-            {
-
-            }
-            else // We subtract
-            {
-
-            }
-
-
-
-
-            return output;
-        }
-
         #endregion
 
 
