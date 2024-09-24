@@ -126,7 +126,7 @@ namespace PaulsRomanNumerals
                      upperNumeral = RomanDict.ContainsKey(upperInt) ? RomanDict[upperInt] : "";
 
                     // Exact match of lower numeral
-                    if(number == 0)
+                    if (number == 0)
                     {
                         continue;
                     }
@@ -134,19 +134,23 @@ namespace PaulsRomanNumerals
                     {
                         RomanNumeral += lowerNumeral;
                     }
-                    else if (number +3 > 5)
+                    else if (number <= 3)
                     {
-                        RomanNumeral += new string(lowerNumeral[0], 5 - number);
+                        RomanNumeral += new string(lowerNumeral[0], number);
+                    }
+                    else if (number < 5)
+                    {
+                        RomanNumeral += $"{new string(lowerNumeral[0], 5 - number)}{midNumeral}";
                     }
                     // Exact match of mid numeral
-                    else if(number == 5)
+                    else if (number == 5)
                     {
-                        RomanNumeral += midNumeral;            
+                        RomanNumeral += midNumeral;
                     }
                     // Move up from the lower numeral
-                    else if (number+3 <= 8)
+                    else if (number <= 8)
                     {
-                        RomanNumeral += $"{midNumeral}{new string(lowerNumeral[0], 5 - number)}";
+                        RomanNumeral += $"{midNumeral}{new string(lowerNumeral[0], number - 5)}";
                     }
                     // Move down from the upper numeral
                     else if (number + 3 > 8)
