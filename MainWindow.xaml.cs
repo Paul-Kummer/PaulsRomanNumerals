@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using PaulsRomanNumerals.JustusRomanNumClass;
+using RomanNumeral;
 
 namespace PaulsRomanNumerals
 {
@@ -51,33 +42,29 @@ namespace PaulsRomanNumerals
             }
         }
 
-        private string _romanNumeral = "0";
-        public string RomanNumeral
+        private P_RomanNumeral _paulNumeral;
+        public P_RomanNumeral PaulNumeral
         {
-            get
-            {
-                return _romanNumeral;
-            }
+            get => _paulNumeral;
             private set
             {
-                _romanNumeral = value;
-                OnPropertyChanged(nameof(RomanNumeral));
+                _paulNumeral = value;
+                OnPropertyChanged(nameof(PaulNumeral));
             }
         }
+        #endregion
 
-        //Verbos getter and setter
-        public string getRomanNumeral()
+        #region "<---- Expand Me Justus!: you're class object will be assigned here and linked to the xaml"
+        private J_RomanNumeral _justusNumeral;
+        public J_RomanNumeral JustusNumeral
         {
-            return _romanNumeral;
+            get => _justusNumeral;
+            set
+            {
+                _justusNumeral = value;
+                OnPropertyChanged(nameof(JustusNumeral));
+            }
         }
-        private void SetRomanNumeral(string value)
-        {
-            _romanNumeral = value;
-            OnPropertyChanged("SetRomanNumeral");
-        }
-
-        //Auto Implemented property
-        public string PaulNumeral { get; set; } = "Paul";
         #endregion
 
 
@@ -86,80 +73,29 @@ namespace PaulsRomanNumerals
         public MainWindow()
         {
             InitializeComponent();
+
+            InitializeRomanObjects();
         }
         #endregion
 
 
 
+        private void InitializeRomanObjects()
+        {
+            PaulNumeral = new P_RomanNumeral(RomanDict);
+            JustusNumeral = new J_RomanNumeral(RomanDict);
+        }
 
         #region "This is where my functions are"
         private void ConvertNumbers()
         {
-            int currentNumber = 0;
-            int numOfZeros = 0;
-
-            int lowerInt = 0;
-            int midInt = 0;
-            int upperInt = 0;
-
-            string lowerNumeral = "";
-            string midNumeral = "";          
-            string upperNumeral = "";
-
             try
             {
-                // Clear out the Roman Numeral so the string can be built
-                RomanNumeral = "";
-
-                for (int index = 0; index < NormalNumber.Length; index++)
-                {
-                    numOfZeros = NormalNumber.Length - (1 + index);
-                    int number = int.Parse(NormalNumber[index].ToString());
-
-                    int.TryParse($"1{new string('0', numOfZeros)}", out lowerInt);
-                    int.TryParse($"5{new string('0', numOfZeros)}", out midInt);
-                    int.TryParse($"1{new string('0', numOfZeros + 1)}", out upperInt);
-
-                   
-                     lowerNumeral = RomanDict.ContainsKey(lowerInt) ? RomanDict[lowerInt] : "";
-                     midNumeral = RomanDict.ContainsKey(midInt) ? RomanDict[midInt] : "";
-                     upperNumeral = RomanDict.ContainsKey(upperInt) ? RomanDict[upperInt] : "";
-
-                    // Exact match of lower numeral
-                    if (number == 0)
-                    {
-                        continue;
-                    }
-                    else if (number == 1)
-                    {
-                        RomanNumeral += lowerNumeral;
-                    }
-                    else if (number <= 3)
-                    {
-                        RomanNumeral += new string(lowerNumeral[0], number);
-                    }
-                    else if (number < 5)
-                    {
-                        RomanNumeral += $"{new string(lowerNumeral[0], 5 - number)}{midNumeral}";
-                    }
-                    // Exact match of mid numeral
-                    else if (number == 5)
-                    {
-                        RomanNumeral += midNumeral;
-                    }
-                    // Move up from the lower numeral
-                    else if (number <= 8)
-                    {
-                        RomanNumeral += $"{midNumeral}{new string(lowerNumeral[0], number - 5)}";
-                    }
-                    // Move down from the upper numeral
-                    else if (number + 3 > 8)
-                    {
-                        RomanNumeral += $"{new string(upperNumeral[0], 10 - number)}{midNumeral}";
-                    }
-                }
+                // I bound directly to the property of the object, so this result isn't necessary.
+                var result = PaulNumeral.ConvertTheNumber(NormalNumber);
+                JustusNumeral.ConvertTheNumber();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Some exception happened that I don't care about.{ex.ToString()}", "Somthing failed!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
