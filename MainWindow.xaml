@@ -66,6 +66,7 @@
                            Width="300"/>
                 <TextBox x:Name="NormalNumber_TextBox"
                          Width="200"
+                         KeyDown="NormalNumber_TextBox_KeyDown"
                          Text="{Binding Path=NormalNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </GroupBox>
