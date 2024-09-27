@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Roman Number Generator" 
-        Height="500" Width="850">
+        Height="500" Width="900">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="16"/>
@@ -37,11 +37,12 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                 Background="AliceBlue" 
                 BorderBrush="Blue" BorderThickness="5" CornerRadius="10"
                 Margin="10">
@@ -68,6 +69,22 @@
                          Width="200"
                          KeyDown="NormalNumber_TextBox_KeyDown"
                          Text="{Binding Path=NormalNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="TestAllNumbersButton"
+                            Content="Test All Numbers"
+                            Background="AliceBlue"
+                            BorderBrush="Blue" BorderThickness="2"
+                            Width="150" Height="25"
+                            Margin="10"
+                            Click="TestAllNumbersButton_Click"/>
+                    <Button x:Name="StopButton"
+                            Content="Stop"
+                            Background="PaleVioletRed"
+                            BorderBrush="Red" BorderThickness="2"
+                            Width="50" Height="25"
+                            Click="StopButton_Click"/>
+                </StackPanel>
+                
             </StackPanel>
         </GroupBox>
 
@@ -100,6 +117,25 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
+
+        <DataGrid Grid.Row="1" Grid.RowSpan="2" Grid.Column="2"
+                  Margin="5"
+                  VerticalScrollBarVisibility="Auto"
+                  AutoGenerateColumns="False"
+                  Foreground="Black"
+                  ItemsSource="{Binding Path=ConversionHistory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Original" Binding="{Binding NumberToConvert}" 
+                                    Foreground="Gray"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Pauls Num" Binding="{Binding  PaulVal}" 
+                                    Foreground="SlateGray"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Justus' Num" Binding="{Binding JustusVal}" 
+                                    Foreground="SlateGray"
+                                    Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
 
         <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"

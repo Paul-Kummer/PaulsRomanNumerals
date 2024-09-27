@@ -13,5 +13,9 @@ namespace PaulsRomanNumerals
     /// </summary>
     public partial class App : Application
     {
+        App()
+        {
+            System.Threading.Thread.Sleep(3000);
+        }
     }
 }
