@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RomanNumeral</name>
+    </assembly>
+    <members>
+        <member name="M:RomanNumeral.P_RomanNumeral.ConvertTheNumber(System.String)">
+            <summary>
+            This function will take a normal intger value and convert it to a roman numeral.
+            The result will be stored in the property "Roman Numeral" of this class.
+            <para>
+            ( <see cref="P:RomanNumeral.P_RomanNumeral.RomanNumeral"/> ) This is the property that stores the result string.
+            </para>
+            </summary>
+        </member>
+        <member name="M:RomanNumeral.P_RomanNumeral.GetNumeralsForPosition(System.String,System.Int32)">
+            <summary>
+            Determines the upper and lower numerals when parsing a string to be converted into a Roman numeral.
+            These two characters represent the numerals for the current index, allowing composition of the number.
+            <para></para>
+            <para>Example:
+            <code>
+            string myNumberString = "39";
+            
+                /*
+                 * In the first loop, the upper char will be 'X' and the lower char will be 'I'.
+                 * In the second loop, the upper char will be 'V' and the lower char will be 'I'.
+                 */
+            for (int index = 0; index &lt; myNumberString.Length; index++)
+            {
+            
+                (char upper, char lower) myNumeralsAtGivenIndex = GetNumeralsForPosition(myNumberString, index);
+                Console.WriteLine($"{myNumeralsAtGivenIndex.upper}{myNumeralsAtGivenIndex.lower}");
+                
+            }
+            </code>
+            </para>
+            </summary>
+            <param name="number">The string being converted.</param>
+            <param name="position">The index position of the character being evaluated.</param>
+            <returns>A tuple containing the upper numeral and lower numeral: (char upper, char lower).</returns>
+        </member>
+        <member name="M:RomanNumeral.P_RomanNumeral.GetUMLNumeralsForPosition(System.String,System.Int32)">
+            <summary>
+            Like the <see cref="M:RomanNumeral.P_RomanNumeral.GetNumeralsForPosition(System.String,System.Int32)"/>, but it will return three possible numeral for the decimal positon looked at.
+            </summary>
+            <param name="number"></param>
+            <param name="position"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

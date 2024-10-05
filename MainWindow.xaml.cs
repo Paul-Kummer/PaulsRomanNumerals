@@ -113,7 +113,7 @@ namespace PaulsRomanNumerals
 
                     // I bound directly to the property of the object, so this result isn't necessary.
                     var result = PaulNumeral.ConvertTheNumber(NormalNumber);
-                    JustusNumeral.ConvertTheNumber();
+                    JustusNumeral.ConvertTheNumber(NormalNumber);
 
                     Dispatcher.Invoke(() =>
                     {

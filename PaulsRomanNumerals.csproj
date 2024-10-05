@@ -128,7 +128,6 @@
     <SplashScreen Include="Resources\Numerals.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </SplashScreen>
-    <Content Include="RomanNumeral.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -136,6 +135,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="RomanNumeral.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RomanNumeral.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
